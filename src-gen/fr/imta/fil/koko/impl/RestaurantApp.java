@@ -12,9 +12,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import fr.imta.fil.koko.Client;
+import fr.imta.fil.koko.Cuisinier;
+import fr.imta.fil.koko.Employee;
 import fr.imta.fil.koko.KokoFactory;
 import fr.imta.fil.koko.KokoPackage;
 import fr.imta.fil.koko.Restaurant;
+import fr.imta.fil.koko.Serveur;
 
 public class RestaurantApp {
 public static void main(String[] args) {
@@ -27,7 +30,9 @@ public static void main(String[] args) {
 		Restaurant koko = factory.createRestaurant();
 		koko.setName("KOKO");
 		
-		EList<Client> client = koko.getClients();
+		EList<Client> clients = koko.getClients();
+		EList<Employee> employees = koko.getEmployees();
+
 
 		
 		while (!arret){
@@ -49,19 +54,52 @@ public static void main(String[] args) {
 			
 			switch (choix) {
 			  	case 1:
-					
+			  		System.out.println("Vous allez ajouter un serveur");
+					Serveur serveur = factory.createServeur();
+					System.out.print("Entrer le nom du serveur: ");
+					String serveurName = console.next();
+					System.out.print("Entrer le prenom du serveur: ");
+					String serveurPrenom = console.next();
+					serveur.setName(serveurName);
+					serveur.setFirstName(serveurPrenom);
+					employees.add(serveur);
 					break;
 			  	case 2:
-					
+			  		System.out.print("Vous allez supprimer un serveur veuillez entrer son nom:");
+					String nameDel = console.next();
+					for (Employee employee2 : employees) {
+						if (employee2.getName().equals(nameDel)) {
+							employees.remove(employee2);
+							System.out.println(employee2.getFirstName() + " " + employee2.getName() + " à été supprimé.");
+							break;
+						}
+					}
+					System.out.println("Serveur non trouvé suppression annulé");
 					break;
 			  	case 3:
-							
+			  		System.out.println("Vous allez ajouter un cuisinier");
+					Cuisinier cuisinier = factory.createCuisinier();
+					System.out.print("Entrer le nom du cuisnier: ");
+					String cuisinierName = console.next();
+					System.out.print("Entrer le prenom du cuisinier: ");
+					String cuisinierPrenom = console.next();
+					cuisinier.setName(cuisinierName);
+					cuisinier.setFirstName(cuisinierPrenom);
+					employees.add(cuisinier);
 					break;
 			  	case 4:
 										
 					break;
 			  	case 5:
-			  		
+			  		System.out.println("Vous allez ajouter un client");
+					Client client = factory.createClient();
+					System.out.print("Entrer le nom du client: ");
+					String clientName = console.next();
+					System.out.print("Entrer le prenom du client: ");
+					String clientPrenom = console.next();
+					client.setName(clientName);
+					client.setFirstName(clientPrenom);
+					clients.add(client);
 					break;
 				case 6:
 							  		
@@ -73,6 +111,15 @@ public static void main(String[] args) {
 						
 					break;
 				case 9:
+					System.out.println(koko.getClients());
+					for (Employee employee : employees) {
+						if (employee instanceof Cuisinier) {
+							System.out.println("je suis un cuisinier");
+						}
+						if (employee instanceof Serveur) {
+							System.out.println("je suis un serveur");
+						}
+					}
 						
 					break;
 				case 10:
