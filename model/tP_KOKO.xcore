@@ -1,0 +1,35 @@
+package fr.imta.fil.koko
+
+class Restaurant {
+	String name
+	contains Employee[*] employees
+	contains Plat[*] plats
+	contains Client[*] clients
+}
+
+
+class Employee {
+    String name
+    String firstName
+    int age
+}
+
+class Plat {
+    String name
+    String description
+    float prix
+}
+
+class Client {
+    String name
+    String firstName
+    refers Plat[*] plats
+}
+
+class Serveur extends Employee {
+	refers Client[*] cliens
+}
+
+class Cuisinier extends Employee {
+	refers Plat[*] plats
+}
