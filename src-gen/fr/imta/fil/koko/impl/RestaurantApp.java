@@ -16,6 +16,7 @@ import fr.imta.fil.koko.Cuisinier;
 import fr.imta.fil.koko.Employee;
 import fr.imta.fil.koko.KokoFactory;
 import fr.imta.fil.koko.KokoPackage;
+import fr.imta.fil.koko.Plat;
 import fr.imta.fil.koko.Restaurant;
 import fr.imta.fil.koko.Serveur;
 
@@ -32,7 +33,7 @@ public static void main(String[] args) {
 		
 		EList<Client> clients = koko.getClients();
 		EList<Employee> employees = koko.getEmployees();
-
+		EList<Plat> plats = koko.getPlats();
 
 		
 		while (!arret){
@@ -65,7 +66,15 @@ public static void main(String[] args) {
 					employees.add(serveur);
 					break;
 			  	case 2:
-			  		System.out.print("Vous allez supprimer un serveur veuillez entrer son nom:");
+			  		System.out.println("Vous allez supprimer un serveur veuillez entrer son nom:");
+					System.out.print("( ");
+			  		for (Employee employee : employees) {
+						if (employee instanceof Serveur) {
+							System.out.print(employee.getName()+" - ");
+						}
+					}
+					System.out.print(" )");
+					
 					String nameDel = console.next();
 					for (Employee employee2 : employees) {
 						if (employee2.getName().equals(nameDel)) {
@@ -88,7 +97,24 @@ public static void main(String[] args) {
 					employees.add(cuisinier);
 					break;
 			  	case 4:
-										
+			  		System.out.println("Vous allez supprimer un cuisinier veuillez entrer son nom:");
+					System.out.print("( ");
+			  		for (Employee employee : employees) {
+						if (employee instanceof Cuisinier) {
+							System.out.print(employee.getName()+" - ");
+						}
+					}
+					System.out.print(" )");
+					
+					String nameDelCuisinier = console.next();
+					for (Employee employee2 : employees) {
+						if (employee2.getName().equals(nameDelCuisinier)) {
+							employees.remove(employee2);
+							System.out.println(employee2.getFirstName() + " " + employee2.getName() + " à été supprimé.");
+							break;
+						}
+					}
+					System.out.println("Cuisinier non trouvé suppression annulé");					
 					break;
 			  	case 5:
 			  		System.out.println("Vous allez ajouter un client");
@@ -102,13 +128,39 @@ public static void main(String[] args) {
 					clients.add(client);
 					break;
 				case 6:
-							  		
+					System.out.println("Vous allez supprimer un client veuillez entrer son nom:");
+					System.out.print("( ");
+			  		for (Client client2 : clients) {
+						System.out.print(client2.getName()+" - ");
+					}
+					System.out.print(" )");
+					
+					String nameDelClient = console.next();
+					for (Client client2 : clients) {
+						if (client2.getName().equals(nameDelClient)) {
+							clients.remove(client2);
+							System.out.println(client2.getFirstName() + " " + client2.getName() + " à été supprimé.");
+							break;
+						}
+					}
+					System.out.println("Client non trouvé suppression annulé");		  		
 					break;
 				case 7:
 						
 					break;
 				case 8:
-						
+					System.out.println("Vous allez ajouter un plat:");
+					Plat plat = factory.createPlat();
+					System.out.print("Entrer le nom du plat: ");
+					String platName = console.next();
+					System.out.print("Entrer la description du plat:");
+					String platDescription = console.next();
+					System.out.print("Entrer le prix du plat:");
+					Float platPrix = console.nextFloat();
+					plat.setName(platName);
+					plat.setDescription(platDescription);
+					plat.setPrix(platPrix);
+					plats.add(plat);	
 					break;
 				case 9:
 					System.out.println(koko.getClients());
@@ -123,6 +175,26 @@ public static void main(String[] args) {
 						
 					break;
 				case 10:
+					ResourceSet rsLoad = new ResourceSetImpl();
+					
+					rsLoad.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+				  	    "xmi",
+				  	    new XMIResourceFactoryImpl()
+				  	);
+					
+					rsLoad.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+			            "ecore", 
+			            new XMIResourceFactoryImpl()
+			        );
+					rsLoad.getPackageRegistry().put(
+				  	    KokoPackage.eNS_URI,
+				  	    KokoPackage.eINSTANCE
+				  	);
+					
+					Resource resourceLoad = rsLoad.getResource(URI.createFileURI("koko.xmi"), true);
+			        
+					Restaurant racineModeleLoad = (Restaurant)(resourceLoad.getContents().get(0));
+					koko = racineModeleLoad;
 					
 					break;
 			  	case 11 : 
