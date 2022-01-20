@@ -1,7 +1,9 @@
 package fr.imta.fil.koko.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import org.eclipse.emf.common.util.EList;
@@ -146,7 +148,90 @@ public static void main(String[] args) {
 					System.out.println("Client non trouvé suppression annulé");		  		
 					break;
 				case 7:
+					System.out.println("Vous allez prendre une commande.");
+					
+					if (!employees.isEmpty()) {
+						System.out.println("Veuillez choisir un numéro de serveur:");
+						for (int i = 0; i < employees.size(); i++) {
+							if (employees.get(i) instanceof Serveur ) {
+								System.out.println("(" + i + ") " + employees.get(i).getName() + " "  + employees.get(i).getFirstName());
+							}
+						}
+					} else {
+						System.out.println("Veuillez inscrire un serveur avant de prendre une commande"); break;
+					}
+					int i = console.nextInt();
+					Serveur serveur2 = (Serveur) employees.get(i);
+			
+					if (!employees.isEmpty()) {
+						System.out.println("Veuillez choisir un numéro de cuisinier:");
+						for (int j = 0; j < employees.size(); j++) {
+							if (employees.get(j) instanceof Cuisinier ) {
+								System.out.println("(" + j + ") " + employees.get(j).getName() + " "  + employees.get(j).getFirstName());
+							}							
+						}
+					} else {
+						System.out.println("Veuillez inscrire un cuisinier avant de prendre une commande"); break;
+					}
+					int j = console.nextInt();
+					Cuisinier cuisinier2 = (Cuisinier) employees.get(j);
+					
+					if (!clients.isEmpty()) {
+						System.out.println("Veuillez choisir un numéro de client:");
+						for (int k = 0; k < clients.size(); k++) {
+							System.out.println("(" + k + ") " + clients.get(k).getName() + " "  + clients.get(k).getFirstName());						
+						}
+					} else {
+						System.out.println("Veuillez inscrire un client avant de prendre une commande"); break;
+					}
+					int k = console.nextInt();
+					Client client2 = clients.get(k);
+					
+					serveur2.getCliens().add(client2);
+	
+										
+					
+			
+					ArrayList<Plat> platss = new ArrayList<Plat>();
+					
+					System.out.println("Vous allez choisir des plats.");
+					System.out.println(plats);
+					boolean nextPlat = true;
+					
+					while(nextPlat) {
+						System.out.println("(1) Ajouter un plat à la commande");
+						System.out.println("(2) Fin de la commande.");
+						choix = console.nextInt();
 						
+						switch (choix) {
+						case 1:
+							String PlatName = console.next();
+							
+							
+							if (!plats.isEmpty()) {
+								System.out.println("Veuillez choisir un numéro de plat:");
+								for (int l = 0; l < plats.size(); l++) {
+									System.out.println("(" + l + ") " + plats.get(l).getName());				
+								}
+							} else {
+								System.out.println("Veuillez enregister un plat avant de prendre une commande"); break;
+							}
+							int l = console.nextInt();
+							Plat plat = plats.get(l);
+							
+							client2.getPlats().add(plat);
+							cuisinier2.getPlats().add(plat);
+							
+							
+							break;
+						case 2:
+							nextPlat = false;
+							break;
+
+						default: nextPlat = false; break;
+						}
+
+					}
 					break;
 				case 8:
 					System.out.println("Vous allez ajouter un plat:");
