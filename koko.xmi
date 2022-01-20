@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<koko:Restaurant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:koko="fr.imta.fil.koko" name="KOKO">
-  <clients name="Wouftier" firstName="P&#xf4;l"/>
-  <clients name="Lecolazet" firstName="Aymeric"/>
+<koko:Restaurant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:koko="fr.imta.fil.koko" name="KOKO">
+  <employees xsi:type="koko:Cuisinier" name="qsdfsdfg" firstName="cvghcvbh"/>
+  <employees xsi:type="koko:Serveur" name="QSDQSD" firstName="1QSDQSD"/>
+  <clients name="vbxcvb" firstName="bxcvdfxg"/>
+  <clients name="jhik" firstName="bjk"/>
 </koko:Restaurant>
