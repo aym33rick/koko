@@ -1,6 +1,9 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -229,8 +232,17 @@ public class RestaurantApp {
 				  	    KokoPackage.eINSTANCE
 				  	);
 					
-					Resource resourceLoad = rsLoad.getResource(URI.createFileURI("koko.xmi"), true);
-			        
+					File currentDir = new File("").getAbsoluteFile();
+					
+					List<File> files = Arrays.stream(currentDir.listFiles()).filter(file->{
+						return "xmi".equals(file.getName().substring(file.getName().lastIndexOf(".") + 1));
+					}).collect(Collectors.toList());
+					
+					File selected = RestaurantApp.selectFromList(console,files,"Sélectionnez une ressource ", "%s\n", File::getName);
+					if(selected == null) break;
+					
+					Resource resourceLoad  = rsLoad.getResource(URI.createFileURI(selected.getAbsolutePath()), true);
+					
 					Restaurant racineModeleLoad = (Restaurant)(resourceLoad.getContents().get(0));
 					koko = racineModeleLoad;
 					
@@ -256,8 +268,11 @@ public class RestaurantApp {
 				  	    KokoPackage.eNS_URI,
 				  	    KokoPackage.eINSTANCE
 				  	);
-			  		
-				  	Resource resource = rs.createResource(URI.createFileURI("koko.xmi"));
+				  	
+				  	System.out.println("Sélectionnez le nom du fichier sans extension");
+				  	String fileName = console.nextLine().replace(".", "");
+				  	
+				  	Resource resource = rs.createResource(URI.createFileURI(fileName+".xmi"));
 				  	
 				  	Restaurant racineModele = koko; 
 
