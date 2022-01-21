@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="ASCII"?>
 <koko:Restaurant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:koko="fr.imta.fil.koko" name="KOKO">
-  <employees xsi:type="koko:Cuisinier" name="qsdfsdfg" firstName="cvghcvbh"/>
-  <employees xsi:type="koko:Serveur" name="QSDQSD" firstName="1QSDQSD"/>
-  <clients name="vbxcvb" firstName="bxcvdfxg"/>
-  <clients name="jhik" firstName="bjk"/>
+  <employees xsi:type="koko:Cuisinier" name="DUMAS" firstName="Chef Michel" plats="//@plats.0 //@plats.1 //@plats.2"/>
+  <employees xsi:type="koko:Serveur" name="DUPONT" firstName="Jean"/>
+  <employees xsi:type="koko:Serveur" name="DUMAS" firstName="Cedric"/>
+  <employees xsi:type="koko:Serveur" name="LECOLAZET" firstName="Aymeric" cliens="//@clients.2"/>
+  <plats name="Lasagnes" description="Mama ces lasagnes sont tr&#xe8;s juteuses !" prix="11.2"/>
+  <plats name="Poulet Curry" description="Merci monsieur pour ce d&#xe9;licieux poulet " prix="9.3"/>
+  <plats name="P&#xe2;tes Carbo" description="Mon coloc mange que &#xe7;a..." prix="4.3"/>
+  <clients name="Sylvester" firstName="Christopher "/>
+  <clients name="Dostie" firstName="Fleurette "/>
+  <clients name="Busque" firstName="Desire " plats="//@plats.0 //@plats.1 //@plats.2"/>
+  <clients name="Guernon" firstName="Senapus "/>
+  <clients name="Bisaillon" firstName="Nicholas "/>
 </koko:Restaurant>

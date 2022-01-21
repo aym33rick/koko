@@ -1,4 +1,4 @@
-package fr.imta.fil.koko.impl;
+package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import fr.imta.fil.koko.KokoPackage;
 import fr.imta.fil.koko.Plat;
 import fr.imta.fil.koko.Restaurant;
 import fr.imta.fil.koko.Serveur;
+import fr.imta.fil.koko.impl.KokoFactoryImpl;
 
 public class RestaurantApp {
 
@@ -36,9 +37,10 @@ public class RestaurantApp {
 	public static final int SUPPRIMER_CLIENT = 6;
 	public static final int NOUVELLE_COMMANDE = 7;
 	public static final int AJOUTER_PLAT = 8;
-	public static final int AFFICHER_RESTAURANT = 9;
-	public static final int CHARGER_RESTAURANT = 10;
-	public static final int SAUVEGARDER_QUITTER= 11;
+	public static final int SUPPRIMER_PLAT = 9;
+	public static final int AFFICHER_RESTAURANT = 10;
+	public static final int CHARGER_RESTAURANT = 11;
+	public static final int SAUVEGARDER_QUITTER= 12;
 	
 	public static void main(String[] args) {
 		
@@ -57,18 +59,26 @@ public class RestaurantApp {
 		
 		
 		while (!arret){
-			System.out.println("\n------------Mon Menu-------------"
-					+ "\n(1) Ajouter un serveur"
-					+ "\n(2) Supprimer un serveur"
-					+ "\n(3) Ajouter un cuisinier"
-					+ "\n(4) Supprimer un cuisinier"
-					+ "\n(5) Ajouter un client"
-					+ "\n(6) Supprimer un client"
-					+ "\n(7) Prendre la commande d'un client par un serveur et la faire preparer par un cuisinier"
-					+ "\n(8) Ajouter un nouveau plat"
-					+ "\n(9) Afficher le restaurant"
-			 		+ "\n(10) Charger un restaurant"
-		     		+ "\n(11) Enregistrer et quitter\n");
+			System.out.printf("\n------------Mon Menu-------------"
+					+ "\n(%d) Ajouter un serveur"
+					+ "\n(%d) Supprimer un serveur"
+					+ "\n(%d) Ajouter un cuisinier"
+					+ "\n(%d) Supprimer un cuisinier"
+					+ "\n(%d) Ajouter un client"
+					+ "\n(%d) Supprimer un client"
+					+ "\n(%d) Prendre la commande d'un client par un serveur et la faire preparer par un cuisinier"
+					+ "\n(%d) Ajouter un nouveau plat"
+					+ "\n(%d) Supprimer un plat"
+					+ "\n(%d) Afficher le restaurant"
+			 		+ "\n(%d) Charger un restaurant"
+		     		+ "\n(%d) Enregistrer et quitter\n",
+		     		NOUVEAU_SERVEUR,SUPPRIMER_SERVEUR,
+		     		NOUVEAU_CUISINIER,SUPPRIMER_CUISINIER,
+		     		NOUVEAU_CLIENT,SUPPRIMER_CLIENT,
+		     		NOUVELLE_COMMANDE,
+		     		AJOUTER_PLAT,SUPPRIMER_PLAT,
+		     		AFFICHER_RESTAURANT,CHARGER_RESTAURANT,
+		     		SAUVEGARDER_QUITTER);
 			System.out.println("Faites vôtre choix: ");
 	
 			choix = Integer.parseInt(console.nextLine());
@@ -108,12 +118,10 @@ public class RestaurantApp {
 					break;
 					
 			  	case SUPPRIMER_CUISINIER:
-			  		System.out.println(cuisiniers);
 			  		Cuisinier cuis = RestaurantApp.selectFromList(console, cuisiniers, "Vous allez supprimer un cuisinier", "%s %s\n", Cuisinier::getName, Cuisinier::getFirstName);
 			  		if(cuis != null) {
 			  			cuisiniers.remove(cuis);	
-			  		}
-			  		System.out.println(cuisiniers);				
+			  		}	
 					break;
 					
 			  	case NOUVEAU_CLIENT:
@@ -129,13 +137,11 @@ public class RestaurantApp {
 					break;
 					
 				case SUPPRIMER_CLIENT:
-			  		System.out.println(clients);
 			  		Client cli = RestaurantApp.selectFromList(console, clients, "Vous allez supprimer un cuisinier", "%s %s\n", Client::getName, Client::getFirstName);
 			  		if(cli != null) {
 			  			clients.remove(cli);	
 			  		}
-			  		serveurs.forEach((current)->current.getCliens().remove(cli));
-			  		System.out.println(clients);			  		
+			  		serveurs.forEach((current)->current.getCliens().remove(cli));  		
 					break;
 					
 				case NOUVELLE_COMMANDE:
@@ -186,6 +192,12 @@ public class RestaurantApp {
 					plat.setPrix(platPrix);
 					plats.add(plat);	
 					break;
+				case SUPPRIMER_PLAT:
+			  		Plat plt = RestaurantApp.selectFromList(console, plats, "Vous allez supprimer un plat", "%s\n", Plat::getName);
+			  		if(plt != null) {
+			  			plats.remove(plt);	
+			  		}	
+					break;
 				case AFFICHER_RESTAURANT:
 					System.out.println("Serveurs :");
 					RestaurantApp.displayList(serveurs, "%s %s\n", Serveur::getFirstName, Serveur::getName);
@@ -197,7 +209,7 @@ public class RestaurantApp {
 					RestaurantApp.displayList(clients, "%s %s\n", Client::getFirstName, Client::getName);
 
 					System.out.println("Plats :");
-					RestaurantApp.displayList(plats, "%s au prix de %.2f€\n", Plat::getName, Plat::getPrix);
+					RestaurantApp.displayList(plats, "%s au prix de %.2f€\n\tDescription : %s\n", Plat::getName, Plat::getPrix, Plat::getDescription);
 						
 					break;
 				case CHARGER_RESTAURANT:
